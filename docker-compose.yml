@@ -1,0 +1,20 @@
+version: '3.7'
+
+services: 
+    traktor-agent:
+        image: traktor-agent
+        ports: 
+            - "13336:13336"
+    traktor-registry:
+        image: traktor_registry
+        ports:
+            - "8080:8080"
+    traktor-fibonacci-server:
+        image: traktor_test_server
+        ports:
+            - "8084:8084"
+        depends_on:
+            - traktor-agent
+            - traktor-registry
+networks:
+    traktor:
