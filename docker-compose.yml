@@ -2,19 +2,36 @@ version: '3.7'
 
 services: 
     traktor-agent:
-        image: traktor-agent
+        build: ./traktoragent/
         ports: 
             - "13336:13336"
+        networks: 
+            - traktor_network
+        environment: 
+            AGENT_IP: 0.0.0.0
+            AGENT_PORT: 13336
     traktor-registry:
-        image: traktor_registry
+        build: ./traktorregistry/
         ports:
-            - "8080:8080"
+            - "8090:8090"
+        networks: 
+            - traktor_network
+        environment: 
+            REGISTRY_PORT: 8090
     traktor-fibonacci-server:
-        image: traktor_test_server
+        build: ./traktor-fibonacci-server/
         ports:
             - "8084:8084"
+        environment: 
+            REGISTRY_IP: "traktor-registry"
+            REGISTRY_PORT: "8090"
+            AGENT_IP: traktor-agent
+            AGENT_PORT: 13336
+            REPORTER_PORT: 13337
         depends_on:
             - traktor-agent
             - traktor-registry
+        networks: 
+            - traktor_network
 networks:
-    traktor:
+    traktor_network:
