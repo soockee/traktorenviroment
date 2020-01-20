@@ -1,0 +1,9 @@
+[submodule "traktoragent"]
+	path = traktoragent
+	url = git@geocode.igd.fraunhofer.de:sstockha/traktoragent.git
+[submodule "traktorregistry"]
+	path = traktorregistry
+	url = git@geocode.igd.fraunhofer.de:sstockha/traktorregistry.git
+[submodule "traktor-fibonacci-server"]
+	path = traktor-fibonacci-server
+	url = git@geocode.igd.fraunhofer.de:sstockha/traktor-fibonacci-server.git
