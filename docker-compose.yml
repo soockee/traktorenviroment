@@ -33,5 +33,23 @@ services:
             - traktor-registry
         networks: 
             - traktor_network
+    traktor-fibonacci-caller:
+        #image: fibo-caller
+        build: ./traktor-fibonacci-caller/
+        ports:
+            - "8085:8085"
+        environment: 
+            REGISTRY_IP: "traktor-registry"
+            REGISTRY_PORT: "8090"
+            AGENT_IP: traktor-agent
+            AGENT_PORT: 13336
+            REPORTER_PORT: 13338
+            FIBO_IP: "traktor-fibonacci-server"
+            FIBO_PORT: "8084"
+        depends_on:
+            - traktor-agent
+            - traktor-registry
+        networks: 
+            - traktor_network
 networks:
     traktor_network:
