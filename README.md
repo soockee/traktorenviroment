@@ -8,7 +8,9 @@ Run the Project via:
 docker-compose up
 ``` 
 
+## Architecture
 
+![Architecture](img/TraktorEnv-ApplicationArchitecture.png)
 ## Example
 
 * Start the Enviroment
