@@ -7,3 +7,6 @@
 [submodule "traktor-fibonacci-server"]
 	path = traktor-fibonacci-server
 	url = git@geocode.igd.fraunhofer.de:sstockha/traktor-fibonacci-server.git
+[submodule "traktor-fibonacci-caller"]
+	path = traktor-fibonacci-caller
+	url = git@geocode.igd.fraunhofer.de:sstockha/traktor-fibonacci-caller.git
