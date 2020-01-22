@@ -39,3 +39,5 @@ http PUT 172.22.0.4:8084 N:=2
 * Add SequenzeDiagramm
 * Thinking about WebsocketPackage Interception
 * Thinking about WebsocketPackage Rebuilding
+* Timer and Clocks: How to archive a more precise clock?
+    * Precision vs Resolution vs Accuracy https://www.tutelman.com/golf/measure/precision.php
