@@ -1,5 +1,8 @@
 # Traktor Test Enviroment
 
+## Requirements
+* Docker
+
 ## Usage
 
 Run the Project via:
@@ -8,10 +11,7 @@ Run the Project via:
 docker-compose up
 ``` 
 
-## Architecture
-
-![Architecture](img/TraktorEnv-ApplicationArchitecture.png)
-## Example
+### Example Request
 
 * Start the Enviroment
 * traktor-fibonacci-server connects to the TraktorRegistry via WebSocket
@@ -20,8 +20,22 @@ docker-compose up
 http PUT 172.22.0.4:8084 N:=2
 ``` 
 * Result is the calculated Fibonacci-Number
+* TraktorRegistry Propagates Context
 * TraktorAgent recieves the SPANS and prints them
 
+## Architecture
+
+![Architecture](img/TraktorEnv-ApplicationArchitecture.png)
 
 ## ToDO
-* Another Webserver which does the HTTP PUT for us, in order to thes tracer.inject and tracer.extract, which are responsible for ContextPropagation via TraktorRegistry
+* New Insights while implementing Caller:
+    * Context Injection
+    * Context Extraction
+    * WebSocketReceiveResult Bufferhandling
+* Thinking about Asynchronous Functions and how to handle them:
+    * ReceiveAsync
+    * SendAsync
+* More Abstraction needed for handling BinaryCarrier and Receive,Send in general
+* Add SequenzeDiagramm
+* Thinking about WebsocketPackage Interception
+* Thinking about WebsocketPackage Rebuilding
