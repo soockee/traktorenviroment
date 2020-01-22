@@ -8,12 +8,20 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Net.Sockets;
+using System.Net.WebSockets;
+
 using System.Net.Http;
+using System.Net.Http.Headers;
+
 using System.Net;
 using System.IO;
 using System.Threading;
 using System.Diagnostics;
 
+using OpenTracing.Propagation;
+using OpenTracing;
+using Traktor.Propagation;
+using Traktor;
 
 namespace Httpserver
 {
@@ -169,16 +177,11 @@ namespace Httpserver
         {
             using (var scope = Program.tracer.BuildSpan("Process Context").StartActive())
             {
-                Console.WriteLine("Reading Request");
                 var body = new StreamReader(context.Request.InputStream, Encoding.UTF8).ReadToEnd();       
-                Console.WriteLine(body);
                 var json = JsonSerializer.Deserialize<JsonObject>(body);
-                Console.WriteLine("JSON.N: " + json.N);                     
-                Console.WriteLine("Starting Request to Server: " +fibo_ip+":"+fibo_port);
+                InjectContext(scope.Span);
                 string response = SendRequest(fibo_ip,fibo_port,json);
-                Console.WriteLine("Building Response");
                 context = BuildRespose(context, response);
-                Console.WriteLine("Closing Response");
                 context.Response.Close();
             }
         }
@@ -206,13 +209,18 @@ namespace Httpserver
         }
         private string SendRequest(string serverip,string serverport, JsonObject jsonobject) 
         {
-            var url = serverip + ":" + serverport;
-            var content = new StringContent(jsonobject.ToString(), Encoding.UTF8, "application/json");
-            Console.WriteLine("Sending Content: " + content.ReadAsStringAsync().Result;
+            var url = "http://"+serverip + ":" + serverport;
+            var content = new StringContent(JsonSerializer.Serialize<JsonObject>(jsonobject),Encoding.UTF8, "application/json");
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
             var response = SimpleHTTPServer.httpclient.PostAsync(url,content).Result;
             string responseContent = response.Content.ReadAsStringAsync().Result;
-            Console.WriteLine(responseContent);
             return responseContent;
+        }
+        private void InjectContext(ISpan span)
+        {
+            BinaryCarrier carrier = new  BinaryCarrier();
+            Program.tracer.Inject(span.Context, BuiltinFormats.Binary, carrier);
+            Program.tracer.registry.SendAsync(carrier.Get().ToArray(), WebSocketMessageType.Binary, true, CancellationToken.None);
         }
     }
 }
