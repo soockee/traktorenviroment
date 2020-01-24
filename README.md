@@ -28,14 +28,10 @@ http PUT 172.22.0.4:8084 N:=2
 ![Architecture](img/TraktorEnv-ApplicationArchitecture.png)
 
 ## ToDO
-* New Insights while implementing Caller:
-    * Context Injection
-    * Context Extraction
-    * WebSocketReceiveResult Bufferhandling
-* Thinking about Asynchronous Functions and how to handle them:
+
+* Further Testing of Asynchronous Functions in multi-threaded enviroments:
     * ReceiveAsync
     * SendAsync
-* More Abstraction needed for handling BinaryCarrier and Receive,Send in general
 * Add SequenzeDiagramm
 * Thinking about WebsocketPackage Interception
 * Thinking about WebsocketPackage Rebuilding
