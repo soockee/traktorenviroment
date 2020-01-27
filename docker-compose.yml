@@ -36,6 +36,9 @@ services:
     traktor-fibonacci-caller:
         #image: fibo-caller
         build: ./traktor-fibonacci-caller/
+        build:
+            context: ./traktor-fibonacci-caller/
+            dockerfile: Dockerfile_interceptor
         ports:
             - "8085:8085"
         environment: 
