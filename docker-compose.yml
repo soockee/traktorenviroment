@@ -54,5 +54,7 @@ services:
             - traktor-registry
         networks: 
             - traktor_network
+        cap_add:
+            - NET_ADMIN
 networks:
     traktor_network:
